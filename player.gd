@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const SPEED = 300.0
+const SPEED = 400.0
 const ROTATION_SPEED = 1.0 # Adjust for smoother/faster rotation
 
 @export var double_tap_delay := 250
@@ -39,10 +39,10 @@ func _physics_process(delta: float) -> void:
 			_:
 				sprite.frame = 1
 	else:
+		var idirection = Vector2(direction.y, direction.x)
 		if direction != Vector2.ZERO:
-			sprite.rotation = lerp_angle(sprite.rotation, clamp(direction.angle(), deg_to_rad(-45), deg_to_rad(45)), ROTATION_SPEED * delta)
+			sprite.rotation = lerp_angle(sprite.rotation, clamp(idirection.angle(), deg_to_rad(-55), deg_to_rad(55)), ROTATION_SPEED * delta)
 		else: sprite.rotation = lerp_angle(sprite.rotation, 0, ROTATION_SPEED * delta)
-		print(rad_to_deg(direction.angle()))
 		
 
 	move_and_slide()
