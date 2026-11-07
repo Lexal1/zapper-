@@ -1,0 +1,175 @@
+[gd_scene format=3 uid="uid://d4kjnlbd04s04"]
+
+[ext_resource type="Script" uid="uid://cx3wpc0h5ij34" path="res://game.gd" id="1_7jktm"]
+[ext_resource type="Script" uid="uid://crxi7uwg2jm8y" path="res://player.gd" id="1_e2o6t"]
+[ext_resource type="Shader" uid="uid://cat3xg3u33f27" path="res://mode7.gdshader" id="1_fc0e3"]
+[ext_resource type="Texture2D" uid="uid://cydrcajfwpsu5" path="res://grass.png" id="3_feb5d"]
+[ext_resource type="Texture2D" uid="uid://cquq7fyyn1poi" path="res://zapper!.png" id="5_7jktm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g4v7s"]
+shader = ExtResource("1_fc0e3")
+shader_parameter/TRANSFORM = Projection(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
+shader_parameter/DEPTH = Vector2(0, 0)
+shader_parameter/REPEAT_X = true
+shader_parameter/REPEAT_Y = false
+shader_parameter/FLIP = false
+
+[sub_resource type="Animation" id="Animation_ryrav"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubViewportContainer:material:shader_parameter/TRANSFORM")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Projection(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SubViewportContainer:material:shader_parameter/DEPTH")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_eow3j"]
+resource_name = "tobase"
+length = 2.5000000000000004
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubViewportContainer:material:shader_parameter/TRANSFORM")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.5),
+"transitions": PackedFloat32Array(-2, 1),
+"update": 0,
+"values": [Projection(1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1), Projection(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SubViewportContainer:material:shader_parameter/DEPTH")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2.5),
+"transitions": PackedFloat32Array(-2, 1),
+"update": 0,
+"values": [Vector2(0, 2), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_j5wjh"]
+resource_name = "tomode"
+length = 2.5000000000000004
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubViewportContainer:material:shader_parameter/TRANSFORM")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.5),
+"transitions": PackedFloat32Array(-2, 1),
+"update": 0,
+"values": [Projection(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1), Projection(1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SubViewportContainer:material:shader_parameter/DEPTH")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2.5),
+"transitions": PackedFloat32Array(-2, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 2)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vef74"]
+_data = {
+&"RESET": SubResource("Animation_ryrav"),
+&"tobase": SubResource("Animation_eow3j"),
+&"tomode": SubResource("Animation_j5wjh")
+}
+
+[node name="Game" type="Node2D" unique_id=1220258468]
+script = ExtResource("1_7jktm")
+
+[node name="Container" type="Control" parent="." unique_id=758535336]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 640.0
+offset_bottom = 480.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Container" unique_id=465937633]
+z_index = -1
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.15294118, 0.7294118, 0.85882354, 1)
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=946683649]
+material = SubResource("ShaderMaterial_g4v7s")
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1660985540]
+disable_3d = true
+handle_input_locally = false
+snap_2d_transforms_to_pixel = true
+size = Vector2i(640, 480)
+render_target_update_mode = 4
+
+[node name="Parallax2D" type="Parallax2D" parent="SubViewportContainer/SubViewport" unique_id=1616449989]
+repeat_size = Vector2(32, 32)
+autoscroll = Vector2(0, 400)
+repeat_times = 19
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/Parallax2D" unique_id=1771685894]
+position = Vector2(288, 224)
+texture = ExtResource("3_feb5d")
+centered = false
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=66577105]
+z_index = 9
+position = Vector2(300, 400)
+scale = Vector2(3, 3)
+script = ExtResource("1_e2o6t")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=1515452980]
+texture = ExtResource("5_7jktm")
+hframes = 10
+vframes = 10
+frame = 11
+
+[node name="DashTimer" type="Timer" parent="Player" unique_id=31920688]
+wait_time = 0.1
+one_shot = true
+
+[node name="DashCooldown" type="Timer" parent="Player/DashTimer" unique_id=903562452]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=145239991]
+libraries/ = SubResource("AnimationLibrary_vef74")
+
+[connection signal="mode_changed" from="." to="Player" method="_on_game_mode_changed"]
+[connection signal="timeout" from="Player/DashTimer" to="Player" method="_on_dash_timer_timeout"]
