@@ -5,6 +5,7 @@ extends Node2D
 var current_mode := false
 
 signal mode_changed(mode)
+signal mode_changing
 
 func gamemode(mode := false):
 	if mode == current_mode: pass
@@ -19,6 +20,9 @@ func gamemode(mode := false):
 		current_mode = false
 		emit_signal("mode_changed", current_mode)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_accept"):
 		gamemode(!current_mode)
+
+func mid_transition() -> void:
+	emit_signal("mode_changing")

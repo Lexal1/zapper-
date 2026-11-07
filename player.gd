@@ -13,38 +13,38 @@ var last_tap_time := 0
 var current_rotation_velocity: float = 0.0
 var real_speed := SPEED
 var last_dash_key := false ## false = left, true = right
+var locked := false
 
 func _physics_process(delta: float) -> void:
 	var direction := Vector2.ZERO
 	direction.x = Input.get_axis("ui_left", "ui_right")
 	direction.y = Input.get_axis("ui_up", "ui_down")
 
-	if Input.is_action_just_pressed("ui_left"):
-		try_dash(false)
-		last_dash_key = false
+	if locked == false:
+		if Input.is_action_just_pressed("ui_left"):
+			try_dash(false)
+			last_dash_key = false
 
-	if Input.is_action_just_pressed("ui_right"):
-		try_dash(true)
-		last_dash_key = true
+		if Input.is_action_just_pressed("ui_right"):
+			try_dash(true)
+			last_dash_key = true
+
+		if get_parent().current_mode == false:
+			sprite.rotation = lerp_angle(sprite.rotation, 0, ROTATION_SPEED * delta * 4)
+			match direction.x:
+				1.0:
+					sprite.frame = 2
+				-1.0:
+					sprite.frame = 0
+				_:
+					sprite.frame = 1
+		else:
+			var idirection = Vector2(direction.y, direction.x)
+			if direction != Vector2.ZERO:
+				sprite.rotation = lerp_angle(sprite.rotation, clamp(idirection.angle(), deg_to_rad(-55), deg_to_rad(55)), ROTATION_SPEED * delta)
+			else: sprite.rotation = lerp_angle(sprite.rotation, 0, ROTATION_SPEED * delta)
 
 	velocity = direction.normalized() * real_speed
-	
-	if get_parent().current_mode == false:
-		sprite.rotation = lerp_angle(sprite.rotation, 0, ROTATION_SPEED * delta * 4)
-		match direction.x:
-			1.0:
-				sprite.frame = 2
-			-1.0:
-				sprite.frame = 0
-			_:
-				sprite.frame = 1
-	else:
-		var idirection = Vector2(direction.y, direction.x)
-		if direction != Vector2.ZERO:
-			sprite.rotation = lerp_angle(sprite.rotation, clamp(idirection.angle(), deg_to_rad(-55), deg_to_rad(55)), ROTATION_SPEED * delta)
-		else: sprite.rotation = lerp_angle(sprite.rotation, 0, ROTATION_SPEED * delta)
-		
-
 	move_and_slide()
 
 
@@ -67,3 +67,9 @@ func _on_game_mode_changed(mode: Variant) -> void:
 	if mode == true:
 		sprite.frame = 11
 	else: sprite.frame = 1
+	locked = false
+
+
+func _on_game_mode_changing() -> void:
+	locked = true
+	sprite.frame = 10
