@@ -17,15 +17,15 @@ var locked := false
 
 func _physics_process(delta: float) -> void:
 	var direction := Vector2.ZERO
-	direction.x = Input.get_axis("ui_left", "ui_right")
-	direction.y = Input.get_axis("ui_up", "ui_down")
+	direction.x = Input.get_axis("left", "right")
+	direction.y = Input.get_axis("up", "down")
 
 	if locked == false:
-		if Input.is_action_just_pressed("ui_left"):
+		if Input.is_action_just_pressed("left"):
 			try_dash(false)
 			last_dash_key = false
 
-		if Input.is_action_just_pressed("ui_right"):
+		if Input.is_action_just_pressed("right"):
 			try_dash(true)
 			last_dash_key = true
 
@@ -40,7 +40,7 @@ func _physics_process(delta: float) -> void:
 					sprite.frame = 1
 		else:
 			var idirection = Vector2(direction.y, direction.x)
-			if direction != Vector2.ZERO:
+			if idirection.y != 0:
 				sprite.rotation = lerp_angle(sprite.rotation, clamp(idirection.angle(), deg_to_rad(-55), deg_to_rad(55)), ROTATION_SPEED * delta)
 			else: sprite.rotation = lerp_angle(sprite.rotation, 0, ROTATION_SPEED * delta)
 

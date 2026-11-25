@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cx3wpc0h5ij34" path="res://game.gd" id="1_7jktm"]
 [ext_resource type="Script" uid="uid://crxi7uwg2jm8y" path="res://player.gd" id="1_e2o6t"]
 [ext_resource type="Shader" uid="uid://cat3xg3u33f27" path="res://mode7.gdshader" id="1_fc0e3"]
+[ext_resource type="AudioStream" uid="uid://7tmjcsq3jdly" path="res://MassiveX.mp3" id="2_ryrav"]
 [ext_resource type="Texture2D" uid="uid://cydrcajfwpsu5" path="res://grass.png" id="3_feb5d"]
 [ext_resource type="Texture2D" uid="uid://cquq7fyyn1poi" path="res://zapper!.png" id="5_7jktm"]
 
@@ -117,7 +118,7 @@ tracks/2/path = NodePath(".")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(1.25),
+"times": PackedFloat32Array(0.5),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -133,7 +134,12 @@ _data = {
 }
 
 [node name="Game" type="Node2D" unique_id=1220258468]
+texture_filter = 1
 script = ExtResource("1_7jktm")
+
+[node name="Music" type="AudioStreamPlayer" parent="." unique_id=1860715979]
+stream = ExtResource("2_ryrav")
+autoplay = true
 
 [node name="Container" type="Control" parent="." unique_id=758535336]
 layout_mode = 3
@@ -169,12 +175,14 @@ size = Vector2i(640, 480)
 render_target_update_mode = 4
 
 [node name="Parallax2D" type="Parallax2D" parent="SubViewportContainer/SubViewport" unique_id=1616449989]
-repeat_size = Vector2(32, 32)
-autoscroll = Vector2(0, 400)
-repeat_times = 19
+repeat_size = Vector2(128, 128)
+autoscroll = Vector2(0, 600)
+repeat_times = 6
 
 [node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/Parallax2D" unique_id=1771685894]
+texture_filter = 1
 position = Vector2(288, 224)
+scale = Vector2(2, 2)
 texture = ExtResource("3_feb5d")
 centered = false
 
@@ -188,7 +196,7 @@ script = ExtResource("1_e2o6t")
 texture = ExtResource("5_7jktm")
 hframes = 10
 vframes = 10
-frame = 11
+frame = 1
 
 [node name="DashTimer" type="Timer" parent="Player" unique_id=31920688]
 wait_time = 0.1
